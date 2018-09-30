@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="liquibase-docs" id="1_init">
+        <sqlFile dbms="mysql"
+                 encoding="utf8"
+                 endDelimiter="\nGO"
+                 path="changelog/1_init.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+    <changeSet author="liquibase-docs" id="2_create_table">
+        <sqlFile dbms="mysql" encoding="utf8" endDelimiter="\nGO"
+                 path="changelog/2_create_table.sql"
+                 relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+    <changeSet author="liquibase-docs" id="2_create_bot_setting_table">
+        <sqlFile dbms="mysql" encoding="utf8" endDelimiter="\nGO"
+                 path="changelog/3_create_bot_setting_table.sql"
+                 relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
+    </changeSet>
+</databaseChangeLog>

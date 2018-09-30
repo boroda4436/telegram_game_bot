@@ -1,0 +1,20 @@
+{
+  "changeSet": {
+    "id": "sqlFile-example",
+    "author": "liquibase-docs",
+    "changes": [
+      {
+        "sqlFile": {
+          "dbms": "mysql",
+          "encoding": "utf8",
+          "endDelimiter": "\\nGO",
+          "path": "sql_migrations/1_init.sql",
+          "relativeToChangelogFile": true,
+          "splitStatements": true,
+          "stripComments": true
+        }
+      }
+    ]
+
+  }
+}
