@@ -17,5 +17,5 @@ public class BotSetting {
     private String token;
 
     @OneToMany(mappedBy = "botSetting", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-    private List<Message> messages;
+    private List<Action> actions;
 }

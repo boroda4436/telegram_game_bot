@@ -8,30 +8,30 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "messages")
-public class Message {
+@Table(name = "actions")
+public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String text;
-    private Message parent;
-    private List<Message> children = new ArrayList<Message>();
+    private Action parent;
+    private List<Action> children = new ArrayList<>();
     private BotSetting botSetting;
 
     @Id
-    @Column(name = "message_id")
+    @Column(name = "action_id")
     public Long getId() {
         return id;
     }
 
     @ManyToOne
-    @JoinColumn(name = "parent_message_id")
-    public Message getParent() {
+    @JoinColumn(name = "parent_action_id")
+    public Action getParent() {
         return parent;
     }
 
-    @OneToMany(mappedBy = "parent", targetEntity = Message.class, fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    public List<Message> getChildren() {
+    @OneToMany(mappedBy = "parent", targetEntity = Action.class, fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    public List<Action> getChildren() {
         return children;
     }
 
