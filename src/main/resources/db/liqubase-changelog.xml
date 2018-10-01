@@ -12,14 +12,4 @@
                  splitStatements="true"
                  stripComments="true"/>
     </changeSet>
-    <changeSet author="liquibase-docs" id="2_create_table">
-        <sqlFile dbms="mysql" encoding="utf8" endDelimiter="\nGO"
-                 path="changelog/2_create_table.sql"
-                 relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
-    </changeSet>
-    <changeSet author="liquibase-docs" id="2_create_bot_setting_table">
-        <sqlFile dbms="mysql" encoding="utf8" endDelimiter="\nGO"
-                 path="changelog/3_create_bot_setting_table.sql"
-                 relativeToChangelogFile="true" splitStatements="true" stripComments="true"/>
-    </changeSet>
 </databaseChangeLog>

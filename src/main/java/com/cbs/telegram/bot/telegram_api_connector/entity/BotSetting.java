@@ -3,6 +3,7 @@ package com.cbs.telegram.bot.telegram_api_connector.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -14,4 +15,7 @@ public class BotSetting {
     private Long id;
     private String name;
     private String token;
+
+    @OneToMany(mappedBy = "botSetting", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    private List<Message> messages;
 }

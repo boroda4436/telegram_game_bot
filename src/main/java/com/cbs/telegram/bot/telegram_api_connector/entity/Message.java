@@ -16,12 +16,14 @@ public class Message {
     private String text;
     private Message parent;
     private List<Message> children = new ArrayList<Message>();
+    private BotSetting botSetting;
 
     @Id
     @Column(name = "message_id")
     public Long getId() {
         return id;
     }
+
     @ManyToOne
     @JoinColumn(name = "parent_message_id")
     public Message getParent() {
@@ -31,5 +33,11 @@ public class Message {
     @OneToMany(mappedBy = "parent", targetEntity = Message.class, fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     public List<Message> getChildren() {
         return children;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "bot_setting_id")
+    public BotSetting getBotSetting() {
+        return botSetting;
     }
 }
