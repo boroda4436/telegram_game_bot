@@ -8,16 +8,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ActionServiceImpl implements ActionService {
-    @Autowired
-    private ActionRepository actionRepository;
+    private final ActionRepository actionRepository;
 
+    @Autowired
+    public ActionServiceImpl(ActionRepository actionRepository) {
+        this.actionRepository = actionRepository;
+    }
 
     @Override
     public Action getNextAction(String message, String botName) {
         return actionRepository.getByTextAndBotSettingName(message, botName);
     }
 
-    public Action addChild(Action action, String text) {
+    public Action addChild(Long actionId, String text) {
+        Action action = actionRepository.getOne(actionId);
         Action child = new Action();
         child.setText(text);
         child.setBotSetting(action.getBotSetting());
@@ -27,8 +31,9 @@ public class ActionServiceImpl implements ActionService {
         return action.getChildren().get(action.getChildren().size() - 1);
     }
 
-    public void delete(Action entity) {
-        entity.getParent().getChildren().remove(entity);
-        actionRepository.save(entity.getParent());
+    public void delete(Long actionId) {
+        Action action = actionRepository.getOne(actionId);
+        action.getParent().getChildren().remove(action);
+        actionRepository.save(action.getParent());
     }
 }

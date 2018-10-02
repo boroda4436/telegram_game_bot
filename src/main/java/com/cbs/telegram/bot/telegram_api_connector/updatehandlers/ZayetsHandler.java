@@ -21,8 +21,13 @@ import java.util.List;
 public class ZayetsHandler extends TelegramLongPollingBot {
     private static final String LOGTAG = "ZAYETS_HANDLER";
 
+    private final ActionService actionService;
+
     @Autowired
-    private ActionService actionService;
+    public ZayetsHandler(ActionService actionService) {
+        this.actionService = actionService;
+    }
+
     @Override
     public void onUpdateReceived(Update update) {
         try {

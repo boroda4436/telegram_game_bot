@@ -16,6 +16,7 @@ public class BotSetting {
     private String name;
     private String token;
 
+    //TODO: do we need it?
     @OneToMany(mappedBy = "botSetting", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     private List<Action> actions;
 }
