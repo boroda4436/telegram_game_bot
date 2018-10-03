@@ -13,10 +13,12 @@ public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "text")
     private String text;
+    @Column(name = "bot_name")
+    private String botName;
     private Action parent;
     private List<Action> children = new ArrayList<>();
-    private BotSetting botSetting;
 
     @Id
     @Column(name = "action_id")
@@ -33,11 +35,5 @@ public class Action {
     @OneToMany(mappedBy = "parent", targetEntity = Action.class, fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     public List<Action> getChildren() {
         return children;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "bot_setting_id")
-    public BotSetting getBotSetting() {
-        return botSetting;
     }
 }

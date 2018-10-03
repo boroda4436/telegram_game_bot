@@ -17,14 +17,14 @@ public class ActionServiceImpl implements ActionService {
 
     @Override
     public Action getNextAction(String message, String botName) {
-        return actionRepository.getByTextAndBotSettingName(message, botName);
+        return actionRepository.getByTextAndBotName(message, botName);
     }
 
     public Action addChild(Long actionId, String text) {
         Action action = actionRepository.getOne(actionId);
         Action child = new Action();
         child.setText(text);
-        child.setBotSetting(action.getBotSetting());
+        child.setBotName(action.getBotName());
         child.setParent(action);
         action.getChildren().add(child);
         action = actionRepository.save(action);
