@@ -11,5 +11,7 @@ public class BotSetting {
     @Id
     @Column(name = "bot_name")
     private String name;
+    @Column(name = "telegram_bot_id")
+    private String telegramId;
     private String token;
 }

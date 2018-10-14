@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActionRepository extends JpaRepository<Action, Long> {
-    Action getByTextAndBotName(String text, String botName);
+    Action getByText(String text);
 }

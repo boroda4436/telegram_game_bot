@@ -14,9 +14,9 @@ public class ActionController {
         this.actionService = actionService;
     }
 
-    @GetMapping("/get")
-    public Action getNextAction(String message, String botName) {
-        return actionService.getNextAction(message, botName);
+    @GetMapping("/next")
+    public Action getNextAction(String message) {
+        return actionService.getNextAction(message);
     }
 
     @PostMapping("/add")

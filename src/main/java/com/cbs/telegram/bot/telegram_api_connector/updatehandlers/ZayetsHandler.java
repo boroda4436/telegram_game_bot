@@ -1,7 +1,7 @@
 package com.cbs.telegram.bot.telegram_api_connector.updatehandlers;
 
-import com.cbs.telegram.bot.telegram_api_connector.config.BotConfig;
 import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
+import com.cbs.telegram.bot.telegram_api_connector.repository.BotSettingRepository;
 import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,10 +22,13 @@ public class ZayetsHandler extends TelegramLongPollingBot {
     private static final String LOGTAG = "ZAYETS_HANDLER";
 
     private final ActionService actionService;
-
+    private final String botId;
+    private final String botToken;
     @Autowired
-    public ZayetsHandler(ActionService actionService) {
+    public ZayetsHandler(ActionService actionService,  BotSettingRepository botSettingRepository) {
         this.actionService = actionService;
+        botId = botSettingRepository.getOne("ZAYETS_USER").getTelegramId();
+        botToken = botSettingRepository.getOne("ZAYETS_USER").getToken();
     }
 
     @Override
@@ -42,20 +45,21 @@ public class ZayetsHandler extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return BotConfig.ZAYETS_USER;
+        return botId;
     }
 
     @Override
     public String getBotToken() {
-        return BotConfig.ZAYETS_TOKEN;
+        return botToken;
     }
 
     private void handleIncomingMessage(Message message) throws TelegramApiException {
         SendMessage sendMessageRequest = new SendMessage();
         sendMessageRequest.setChatId(message.getChatId());
-        Action nextAction = actionService.getNextAction(BotConfig.ZAYETS_USER, message.getText());
+        Action nextAction = actionService.getNextAction(message.getText());
         sendMessageRequest.setReplyMarkup(getPossibleResponseKeyboard(nextAction));
-        sendMessageRequest.setText(nextAction.getText());
+        String text = nextAction == null ? "Hello world!" : nextAction.getText();
+        sendMessageRequest.setText(text);
         execute(sendMessageRequest);
     }
 
@@ -66,11 +70,20 @@ public class ZayetsHandler extends TelegramLongPollingBot {
         replyKeyboardMarkup.setOneTimeKeyboard(false);
 
         List<KeyboardRow> keyboard = new ArrayList<>();
-        action.getChildren().forEach(m -> {
+
+        if (action != null) {
+            action.getChildren().forEach(m -> {
+                KeyboardRow row = new KeyboardRow();
+                row.add(m.getText());
+                keyboard.add(row);
+            });
+        } else {
             KeyboardRow row = new KeyboardRow();
-            row.add(m.getText());
+            row.add("Let's start the game!");
             keyboard.add(row);
-        });
+        }
+
+
         replyKeyboardMarkup.setKeyboard(keyboard);
 
         return replyKeyboardMarkup;

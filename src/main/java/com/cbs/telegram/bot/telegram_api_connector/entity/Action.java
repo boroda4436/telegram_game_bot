@@ -15,8 +15,6 @@ public class Action {
     private Long id;
     @Column(name = "text")
     private String text;
-    @Column(name = "bot_name")
-    private String botName;
     private Action parent;
     private List<Action> children = new ArrayList<>();
 
