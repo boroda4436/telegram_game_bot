@@ -16,7 +16,7 @@ public class ActionController {
 
     @GetMapping("/get")
     public Action getNextAction(Long actionId) {
-        return actionService.get(actionId);
+        return actionService.getAction(actionId);
     }
 
     @PostMapping("/add")
@@ -26,6 +26,6 @@ public class ActionController {
 
     @DeleteMapping("/delete")
     public void delete(Long actionId) {
-        actionService.delete(actionId);
+        actionService.deleteAction(actionId);
     }
 }

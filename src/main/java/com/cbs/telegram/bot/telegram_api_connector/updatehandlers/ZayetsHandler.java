@@ -59,10 +59,15 @@ public class ZayetsHandler extends TelegramLongPollingBot {
         sendMessageRequest.setChatId(message.getChatId());
         Action nextAction = actionService.getNextUserAction(message.getChatId(), message.getText());
         if (nextAction == null) {
+            //TODO:
+//            Action action = actionService.getStartUpAction();
+//            actionService.updateLastUserAction(message.getChatId(), action.getId());
             sendMessageRequest.setReplyMarkup(startTheGameKeyboard());
             sendMessageRequest.setText("Hello world!");
             return;
         }
+
+        actionService.updateLastUserAction(message.getChatId(), nextAction.getId());
         sendMessageRequest.setReplyMarkup(getPossibleResponseKeyboard(nextAction));
         String text = nextAction.getText();
         sendMessageRequest.setText(text);

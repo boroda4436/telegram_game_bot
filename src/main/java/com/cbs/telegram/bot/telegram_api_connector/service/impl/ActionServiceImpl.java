@@ -23,7 +23,7 @@ public class ActionServiceImpl implements ActionService {
     }
 
     @Override
-    public Action get(Long actionId) {
+    public Action getAction(Long actionId) {
         return actionRepository.getOne(actionId);
     }
 
@@ -41,6 +41,16 @@ public class ActionServiceImpl implements ActionService {
                 findAny().orElse(null);
     }
 
+    //TODO: test it
+    @Override
+    public void updateLastUserAction(Long chatId, Long actionId) {
+        UserLastAction previousUserAction = userLastActionRepository.getOne(chatId);
+        Action newLastAction = actionRepository.getOne(actionId);
+        previousUserAction.setAction(newLastAction);
+        actionRepository.save(newLastAction);
+        actionRepository.flush();
+    }
+
     public Action addChild(Long actionId, String text) {
         Action action = actionRepository.getOne(actionId);
         Action child = new Action();
@@ -51,7 +61,7 @@ public class ActionServiceImpl implements ActionService {
         return action.getChildren().get(action.getChildren().size() - 1);
     }
 
-    public void delete(Long actionId) {
+    public void deleteAction(Long actionId) {
         Action action = actionRepository.getOne(actionId);
         action.getParent().getChildren().remove(action);
         actionRepository.save(action.getParent());
