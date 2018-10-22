@@ -14,9 +14,9 @@ public class ActionController {
         this.actionService = actionService;
     }
 
-    @GetMapping("/next")
-    public Action getNextAction(String message) {
-        return actionService.getNextAction(message);
+    @GetMapping("/get")
+    public Action getNextAction(Long actionId) {
+        return actionService.get(actionId);
     }
 
     @PostMapping("/add")

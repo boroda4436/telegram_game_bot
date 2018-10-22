@@ -53,14 +53,25 @@ public class ZayetsHandler extends TelegramLongPollingBot {
         return botToken;
     }
 
+    //TODO: verify and implement
     private void handleIncomingMessage(Message message) throws TelegramApiException {
         SendMessage sendMessageRequest = new SendMessage();
         sendMessageRequest.setChatId(message.getChatId());
-        Action nextAction = actionService.getNextAction(message.getText());
+        Action nextAction = actionService.getNextUserAction(message.getChatId(), message.getText());
+        if (nextAction == null) {
+            sendMessageRequest.setReplyMarkup(startTheGameKeyboard());
+            sendMessageRequest.setText("Hello world!");
+            return;
+        }
         sendMessageRequest.setReplyMarkup(getPossibleResponseKeyboard(nextAction));
-        String text = nextAction == null ? "Hello world!" : nextAction.getText();
+        String text = nextAction.getText();
         sendMessageRequest.setText(text);
         execute(sendMessageRequest);
+    }
+
+    //TODO: implement
+    private static ReplyKeyboardMarkup startTheGameKeyboard() {
+        return null;
     }
 
     private static ReplyKeyboardMarkup getPossibleResponseKeyboard(Action action) {

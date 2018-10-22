@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+//TODO: move it to env variables
+
 @Data
 @Entity
 @Table(name = "bot_setting")
