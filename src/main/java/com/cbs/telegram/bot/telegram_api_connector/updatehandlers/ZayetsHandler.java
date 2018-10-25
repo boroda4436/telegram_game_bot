@@ -27,6 +27,7 @@ public class ZayetsHandler extends TelegramLongPollingBot {
     @Autowired
     public ZayetsHandler(ActionService actionService,  BotSettingRepository botSettingRepository) {
         this.actionService = actionService;
+        //TODO: move it to environment variables
         botId = botSettingRepository.getOne("ZAYETS_USER").getTelegramId();
         botToken = botSettingRepository.getOne("ZAYETS_USER").getToken();
     }
@@ -55,28 +56,19 @@ public class ZayetsHandler extends TelegramLongPollingBot {
 
     //TODO: verify and implement
     private void handleIncomingMessage(Message message) throws TelegramApiException {
+        Long chatId = message.getChatId();
         SendMessage sendMessageRequest = new SendMessage();
-        sendMessageRequest.setChatId(message.getChatId());
-        Action nextAction = actionService.getNextUserAction(message.getChatId(), message.getText());
+        sendMessageRequest.setChatId(chatId);
+        Action nextAction = actionService.getNextUserAction(chatId, message.getText());
         if (nextAction == null) {
-            //TODO:
-//            Action action = actionService.getStartUpAction();
-//            actionService.updateLastUserAction(message.getChatId(), action.getId());
-            sendMessageRequest.setReplyMarkup(startTheGameKeyboard());
-            sendMessageRequest.setText("Hello world!");
-            return;
+            nextAction = actionService.getStartUpAction(chatId);
         }
 
-        actionService.updateLastUserAction(message.getChatId(), nextAction.getId());
+        actionService.updateLastUserAction(chatId, nextAction.getId());
         sendMessageRequest.setReplyMarkup(getPossibleResponseKeyboard(nextAction));
         String text = nextAction.getText();
         sendMessageRequest.setText(text);
         execute(sendMessageRequest);
-    }
-
-    //TODO: implement
-    private static ReplyKeyboardMarkup startTheGameKeyboard() {
-        return null;
     }
 
     private static ReplyKeyboardMarkup getPossibleResponseKeyboard(Action action) {

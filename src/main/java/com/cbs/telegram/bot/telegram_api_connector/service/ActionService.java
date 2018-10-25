@@ -7,5 +7,6 @@ public interface ActionService {
     Action addChild(Long actionId, String text);
     void deleteAction(Long actionId);
     Action getNextUserAction(Long chatId, String message);
+    Action getStartUpAction(Long chatId);
     void updateLastUserAction(Long chatId, Long actionId);
 }

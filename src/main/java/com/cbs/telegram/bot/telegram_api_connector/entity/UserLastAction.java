@@ -1,11 +1,13 @@
 package com.cbs.telegram.bot.telegram_api_connector.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+@Builder
 @Data
 @Entity
 @Table(name = "user_last_actions")

@@ -8,6 +8,7 @@ import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +30,9 @@ public class ActionServiceImpl implements ActionService {
 
     @Override
     public Action getNextUserAction(Long chatId, String message) {
-        UserLastAction userLastAction = userLastActionRepository.getOne(chatId);
+        UserLastAction userLastAction = userLastActionRepository.
+                findById(chatId).
+                orElseGet(this::getDefaultUserLastAction);
         return userLastAction.getAction().getChildren().
                 stream().
                 filter(Objects::nonNull).
@@ -41,14 +44,33 @@ public class ActionServiceImpl implements ActionService {
                 findAny().orElse(null);
     }
 
+    private UserLastAction getDefaultUserLastAction() {
+        Action action = new Action();
+        action.setChildren(Collections.emptyList());
+        return UserLastAction.builder().action(action).build();
+    }
+
+    @Override
+    public Action getStartUpAction(Long chatId) {
+        Action action = new Action();
+        //TODO: do not hardcode it! Make it more elegant
+        action.setText("Hello world!");
+        action.setId(1L);
+        return actionRepository.saveAndFlush(action);
+    }
+
     //TODO: test it
     @Override
     public void updateLastUserAction(Long chatId, Long actionId) {
-        UserLastAction previousUserAction = userLastActionRepository.getOne(chatId);
+        UserLastAction previousUserAction = userLastActionRepository.findById(chatId).orElseGet(this::getDefaultUserLastAction);
         Action newLastAction = actionRepository.getOne(actionId);
         previousUserAction.setAction(newLastAction);
         actionRepository.save(newLastAction);
         actionRepository.flush();
+    }
+
+    private UserLastAction getDefaultUserLastAction (Long chatId) {
+        return UserLastAction.builder().chartId(chatId).build();
     }
 
     public Action addChild(Long actionId, String text) {
