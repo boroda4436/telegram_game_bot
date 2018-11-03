@@ -5,7 +5,8 @@ import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "/action")
+@RestController
+@RequestMapping("action")
 public class ActionController {
     private final ActionService actionService;
 
@@ -14,8 +15,8 @@ public class ActionController {
         this.actionService = actionService;
     }
 
-    @GetMapping("/get")
-    public Action getNextAction(Long actionId) {
+    @GetMapping("/get/{actionId}")
+    public Action getNextAction(@PathVariable Long actionId) {
         return actionService.getAction(actionId);
     }
 
@@ -25,7 +26,7 @@ public class ActionController {
     }
 
     @DeleteMapping("/delete")
-    public void delete(Long actionId) {
+    public void delete(@PathVariable Long actionId) {
         actionService.deleteAction(actionId);
     }
 }

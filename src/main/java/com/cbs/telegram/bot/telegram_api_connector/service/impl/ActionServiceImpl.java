@@ -25,7 +25,8 @@ public class ActionServiceImpl implements ActionService {
 
     @Override
     public Action getAction(Long actionId) {
-        return actionRepository.getOne(actionId);
+        //TODO: refactor
+        return actionRepository.findById(actionId).orElse(null);
     }
 
     @Override
