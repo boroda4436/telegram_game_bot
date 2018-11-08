@@ -1,5 +1,6 @@
 package com.cbs.telegram.bot.telegram_api_connector.service.impl;
 
+import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
 import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
 import com.cbs.telegram.bot.telegram_api_connector.entity.UserLastAction;
 import com.cbs.telegram.bot.telegram_api_connector.exception.NoDataFoundException;
@@ -26,8 +27,9 @@ public class ActionServiceImpl implements ActionService {
     }
 
     @Override
-    public Action getAction(Long actionId) {
-        return actionRepository.findById(actionId).orElseThrow(() -> new NoDataFoundException("Can't find action with id=" + actionId));
+    public ActionDto getAction(Long actionId) {
+        Action action = actionRepository.findById(actionId).orElseThrow(() -> new NoDataFoundException("Can't find action with id=" + actionId));
+        return ActionDto.parseFromActionEntity(action);
     }
 
     @Override
@@ -83,8 +85,7 @@ public class ActionServiceImpl implements ActionService {
         child.setParent(action);
         action.getChildren().add(child);
         action = actionRepository.saveAndFlush(action);
-        Action response = action.getChildren().get(action.getChildren().size() - 1);
-        return response;
+        return action.getChildren().get(action.getChildren().size() - 1);
     }
 
     @Override

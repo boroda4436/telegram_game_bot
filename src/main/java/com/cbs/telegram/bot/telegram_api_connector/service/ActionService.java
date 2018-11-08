@@ -1,9 +1,10 @@
 package com.cbs.telegram.bot.telegram_api_connector.service;
 
+import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
 import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
 
 public interface ActionService {
-    Action getAction(Long actionId);
+    ActionDto getAction(Long actionId);
     Action addChild(Long actionId, String text);
     Action updateActionMessage(Long actionId, String text);
     void deleteAction(Long actionId);

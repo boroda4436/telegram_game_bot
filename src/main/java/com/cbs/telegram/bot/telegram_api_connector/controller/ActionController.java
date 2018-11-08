@@ -1,5 +1,6 @@
 package com.cbs.telegram.bot.telegram_api_connector.controller;
 
+import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
 import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
 import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ActionController {
     }
 
     @GetMapping("/get/{actionId}")
-    public Action getNextAction(@PathVariable Long actionId) {
+    public ActionDto getNextAction(@PathVariable Long actionId) {
         return actionService.getAction(actionId);
     }
 
