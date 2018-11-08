@@ -2,11 +2,13 @@ package com.cbs.telegram.bot.telegram_api_connector.service.impl;
 
 import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
 import com.cbs.telegram.bot.telegram_api_connector.entity.UserLastAction;
+import com.cbs.telegram.bot.telegram_api_connector.exception.NoDataFoundException;
 import com.cbs.telegram.bot.telegram_api_connector.repository.ActionRepository;
 import com.cbs.telegram.bot.telegram_api_connector.repository.UserLastActionRepository;
 import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,8 +27,7 @@ public class ActionServiceImpl implements ActionService {
 
     @Override
     public Action getAction(Long actionId) {
-        //TODO: refactor
-        return actionRepository.findById(actionId).orElse(null);
+        return actionRepository.findById(actionId).orElseThrow(() -> new NoDataFoundException("Can't find action with id=" + actionId));
     }
 
     @Override
@@ -74,14 +75,25 @@ public class ActionServiceImpl implements ActionService {
         return UserLastAction.builder().chartId(chatId).build();
     }
 
+    @Transactional
     public Action addChild(Long actionId, String text) {
         Action action = actionRepository.getOne(actionId);
         Action child = new Action();
         child.setText(text);
         child.setParent(action);
         action.getChildren().add(child);
-        action = actionRepository.save(action);
-        return action.getChildren().get(action.getChildren().size() - 1);
+        action = actionRepository.saveAndFlush(action);
+        Action response = action.getChildren().get(action.getChildren().size() - 1);
+        return response;
+    }
+
+    @Override
+    public Action updateActionMessage(Long actionId, String text) {
+        Action action = actionRepository.findById(actionId).
+                orElseThrow(() -> new NoDataFoundException("Can't find action with id=" + actionId));
+        action.setText(text);
+        actionRepository.save(action); //TODO: test it. Does it really saves to DB and return updated value?
+        return action;
     }
 
     public void deleteAction(Long actionId) {
