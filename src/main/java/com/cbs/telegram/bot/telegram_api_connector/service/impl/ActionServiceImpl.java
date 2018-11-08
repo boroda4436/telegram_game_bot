@@ -33,14 +33,14 @@ public class ActionServiceImpl implements ActionService {
     }
 
     @Override
-    public Action getNextUserAction(Long chatId, String message) {
+    public ActionDto getNextUserAction(Long chatId, String message) {
         UserLastAction userLastAction = userLastActionRepository.
                 findById(chatId).
                 orElseGet(this::getDefaultUserLastAction);
         return userLastAction.getAction().getChildren().
                 stream().
                 filter(Objects::nonNull).
-                map(Action::getChildren).
+                map(ActionDto::getChildren).
                 filter(Objects::nonNull).
                 flatMap(List::stream).
                 filter(Objects::nonNull).
@@ -49,26 +49,29 @@ public class ActionServiceImpl implements ActionService {
     }
 
     private UserLastAction getDefaultUserLastAction() {
-        Action action = new Action();
+        ActionDto action = new ActionDto();
         action.setChildren(Collections.emptyList());
         return UserLastAction.builder().action(action).build();
     }
 
     @Override
-    public Action getStartUpAction(Long chatId) {
+    public ActionDto getStartUpAction(Long chatId) {
         Action action = new Action();
         //TODO: do not hardcode it! Make it more elegant
         action.setText("Hello world!");
         action.setId(1L);
-        return actionRepository.saveAndFlush(action);
+        Action savedAction = actionRepository.saveAndFlush(action);
+        return ActionDto.parseFromActionEntity(savedAction);
     }
 
     //TODO: test it
     @Override
     public void updateLastUserAction(Long chatId, Long actionId) {
-        UserLastAction previousUserAction = userLastActionRepository.findById(chatId).orElseGet(this::getDefaultUserLastAction);
-        Action newLastAction = actionRepository.getOne(actionId);
-        previousUserAction.setAction(newLastAction);
+        UserLastAction previousUserAction = userLastActionRepository.findById(chatId).
+                orElseGet(this::getDefaultUserLastAction);
+        Action newLastAction = actionRepository.findById(actionId).
+                orElseThrow(() -> new NoDataFoundException("Can't find action with id=" + actionId));
+        previousUserAction.setAction(ActionDto.parseFromActionEntity(newLastAction));
         actionRepository.save(newLastAction);
         actionRepository.flush();
     }
@@ -78,23 +81,25 @@ public class ActionServiceImpl implements ActionService {
     }
 
     @Transactional
-    public Action addChild(Long actionId, String text) {
-        Action action = actionRepository.getOne(actionId);
+    public ActionDto addChild(Long actionId, String text) {
+        Action parentAction = actionRepository.getOne(actionId);
         Action child = new Action();
         child.setText(text);
-        child.setParent(action);
-        action.getChildren().add(child);
-        action = actionRepository.saveAndFlush(action);
-        return action.getChildren().get(action.getChildren().size() - 1);
+        child.setParent(parentAction);
+        parentAction.getChildren().add(child);
+        parentAction = actionRepository.saveAndFlush(parentAction);
+
+        Action savedAction = parentAction.getChildren().get(parentAction.getChildren().size() - 1);
+        return ActionDto.parseFromActionEntity(savedAction);
     }
 
     @Override
-    public Action updateActionMessage(Long actionId, String text) {
+    public ActionDto updateActionMessage(Long actionId, String text) {
         Action action = actionRepository.findById(actionId).
                 orElseThrow(() -> new NoDataFoundException("Can't find action with id=" + actionId));
         action.setText(text);
-        actionRepository.save(action); //TODO: test it. Does it really saves to DB and return updated value?
-        return action;
+        Action savedAction = actionRepository.save(action);
+        return ActionDto.parseFromActionEntity(savedAction);
     }
 
     public void deleteAction(Long actionId) {

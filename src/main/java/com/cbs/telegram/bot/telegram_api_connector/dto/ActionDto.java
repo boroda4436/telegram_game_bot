@@ -22,6 +22,8 @@ public class ActionDto {
 
 
     public static ActionDto parseFromActionEntity(Action action) {
+        if (action == null) return null;
+
         ActionDto dto = new ActionDto();
         dto.setId(action.getId());
         dto.setParentId(action.getParentId());

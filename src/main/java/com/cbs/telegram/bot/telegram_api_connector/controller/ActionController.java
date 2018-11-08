@@ -1,7 +1,6 @@
 package com.cbs.telegram.bot.telegram_api_connector.controller;
 
 import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
-import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
 import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,12 +26,12 @@ public class ActionController {
     }
 
     @PostMapping("/add")
-    public Action addChild(Long actionId, String text) {
+    public ActionDto addChild(Long actionId, String text) {
         return actionService.addChild(actionId, text);
     }
 
     @PostMapping("/updateMessage")
-    public Action updateMessage(Long actionId, String text) {
+    public ActionDto updateMessage(Long actionId, String text) {
         return actionService.updateActionMessage(actionId, text);
     }
 

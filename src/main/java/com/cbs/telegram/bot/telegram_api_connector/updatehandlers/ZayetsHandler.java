@@ -1,6 +1,6 @@
 package com.cbs.telegram.bot.telegram_api_connector.updatehandlers;
 
-import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
+import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
 import com.cbs.telegram.bot.telegram_api_connector.repository.BotSettingRepository;
 import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class ZayetsHandler extends TelegramLongPollingBot {
         Long chatId = message.getChatId();
         SendMessage sendMessageRequest = new SendMessage();
         sendMessageRequest.setChatId(chatId);
-        Action nextAction = actionService.getNextUserAction(chatId, message.getText());
+        ActionDto nextAction = actionService.getNextUserAction(chatId, message.getText());
         if (nextAction == null) {
             nextAction = actionService.getStartUpAction(chatId);
         }
@@ -71,7 +71,7 @@ public class ZayetsHandler extends TelegramLongPollingBot {
         execute(sendMessageRequest);
     }
 
-    private static ReplyKeyboardMarkup getPossibleResponseKeyboard(Action action) {
+    private static ReplyKeyboardMarkup getPossibleResponseKeyboard(ActionDto action) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
