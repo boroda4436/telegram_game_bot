@@ -27,5 +27,5 @@ public class UserLastAction {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "last_action_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private ActionDto action;
+    private Action action;
 }

@@ -37,19 +37,21 @@ public class ActionServiceImpl implements ActionService {
         UserLastAction userLastAction = userLastActionRepository.
                 findById(chatId).
                 orElseGet(this::getDefaultUserLastAction);
-        return userLastAction.getAction().getChildren().
+        Action action = userLastAction.getAction();
+        ActionDto actionDto = ActionDto.parseFromActionEntity(action);
+        return actionDto.getChildren().
                 stream().
                 filter(Objects::nonNull).
                 map(ActionDto::getChildren).
                 filter(Objects::nonNull).
                 flatMap(List::stream).
                 filter(Objects::nonNull).
-                filter(action -> message.equalsIgnoreCase(action.getText())).
+                filter(a -> message.equalsIgnoreCase(a.getText())).
                 findAny().orElse(null);
     }
 
     private UserLastAction getDefaultUserLastAction() {
-        ActionDto action = new ActionDto();
+        Action action = new Action();
         action.setChildren(Collections.emptyList());
         return UserLastAction.builder().action(action).build();
     }
@@ -71,7 +73,7 @@ public class ActionServiceImpl implements ActionService {
                 orElseGet(this::getDefaultUserLastAction);
         Action newLastAction = actionRepository.findById(actionId).
                 orElseThrow(() -> new NoDataFoundException("Can't find action with id=" + actionId));
-        previousUserAction.setAction(ActionDto.parseFromActionEntity(newLastAction));
+        previousUserAction.setAction(newLastAction);
         actionRepository.save(newLastAction);
         actionRepository.flush();
     }
