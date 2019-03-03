@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cbs.telegram.bot</groupId>
-    <artifactId>telegram_api_connector</artifactId>
+    <artifactId>telegram-bot</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
