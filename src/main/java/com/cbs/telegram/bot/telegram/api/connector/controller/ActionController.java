@@ -1,7 +1,7 @@
-package com.cbs.telegram.bot.telegram_api_connector.controller;
+package com.cbs.telegram.bot.telegram.api.connector.controller;
 
-import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
-import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
+import com.cbs.telegram.bot.telegram.api.connector.dto.ActionDto;
+import com.cbs.telegram.bot.telegram.api.connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

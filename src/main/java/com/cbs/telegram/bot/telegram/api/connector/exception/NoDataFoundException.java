@@ -1,4 +1,4 @@
-package com.cbs.telegram.bot.telegram_api_connector.exception;
+package com.cbs.telegram.bot.telegram.api.connector.exception;
 
 public class NoDataFoundException extends RuntimeException {
     public NoDataFoundException(String message) {

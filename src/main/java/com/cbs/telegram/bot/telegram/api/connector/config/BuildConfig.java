@@ -1,4 +1,4 @@
-package com.cbs.telegram.bot.telegram_api_connector.config;
+package com.cbs.telegram.bot.telegram.api.connector.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Log4j2
 @Component
-@ConfigurationProperties(prefix="bot.config")
+@ConfigurationProperties(prefix = "bot.config")
 public class BuildConfig {
     private Boolean useWebHook;
     private String externalWebhookUrl;

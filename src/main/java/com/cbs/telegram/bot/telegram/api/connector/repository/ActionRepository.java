@@ -1,6 +1,6 @@
-package com.cbs.telegram.bot.telegram_api_connector.repository;
+package com.cbs.telegram.bot.telegram.api.connector.repository;
 
-import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
+import com.cbs.telegram.bot.telegram.api.connector.entity.Action;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

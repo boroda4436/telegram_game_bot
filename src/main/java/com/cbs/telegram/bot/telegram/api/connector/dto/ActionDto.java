@@ -1,14 +1,16 @@
-package com.cbs.telegram.bot.telegram_api_connector.dto;
+package com.cbs.telegram.bot.telegram.api.connector.dto;
 
-import com.cbs.telegram.bot.telegram_api_connector.entity.Action;
+import com.cbs.telegram.bot.telegram.api.connector.entity.Action;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +24,9 @@ public class ActionDto {
 
 
     public static ActionDto parseFromActionEntity(Action action) {
-        if (action == null) return null;
+        if (action == null) {
+            return null;
+        }
 
         ActionDto dto = new ActionDto();
         dto.setId(action.getId());

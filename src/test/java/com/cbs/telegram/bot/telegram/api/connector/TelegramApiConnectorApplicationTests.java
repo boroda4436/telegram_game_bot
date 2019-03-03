@@ -1,4 +1,4 @@
-package com.cbs.telegram.bot.telegram_api_connector;
+package com.cbs.telegram.bot.telegram.api.connector;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,10 @@
-package com.cbs.telegram.bot.telegram_api_connector.entity;
+package com.cbs.telegram.bot.telegram.api.connector.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import java.util.ArrayList;
-import java.util.List;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -48,19 +49,20 @@ public class Action {
     }
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "parent", targetEntity = Action.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parent", targetEntity = Action.class,
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Action> getChildren() {
         return children;
     }
 
     @Override
     public String toString() {
-        return "Action{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", parentId=" + getParentId() +
-                ", children=" + children +
-                '}';
+        return "Action{"
+                + "id=" + id
+                + ", text='" + text + '\''
+                + ", parentId=" + getParentId()
+                + ", children=" + children
+                + '}';
     }
 
     @Transient

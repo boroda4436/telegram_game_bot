@@ -1,11 +1,11 @@
-package com.cbs.telegram.bot.telegram_api_connector.entity;
-
-import lombok.Data;
+package com.cbs.telegram.bot.telegram.api.connector.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import lombok.Data;
 
 //TODO: move it to env variables
 
