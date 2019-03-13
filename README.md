@@ -1,4 +1,5 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/boroda4436/telegram_game_bot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/boroda4436/telegram_game_bot/alerts/)
+
 #Telegram game bot
 
 How to start?
