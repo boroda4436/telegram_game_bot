@@ -1,3 +1,4 @@
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/boroda4436/telegram_game_bot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/boroda4436/telegram_game_bot/alerts/)
 #Telegram game bot
 
 How to start?
@@ -5,4 +6,3 @@ How to start?
  >mvn clean install
 - Run with debug options 
 > java -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar target\telegram_api_connector-1.0.jar
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/boroda4436/telegram_game_bot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/boroda4436/telegram_game_bot/alerts/)
