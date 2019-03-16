@@ -28,6 +28,11 @@ jobs:
         name: Wait for DB
         # preinstalled in circleci/* docker image
         command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+    - run:
+        name: Create DATABASE
+        command: |
+          mysql \
+          -c "CREATE DATABASE IF NOT  EXISTS `zayets_bot` DEFAULT CHARACTER SET utf8;"
 
     - run: mvn clean install -Dspring.datasource.password=1234
 
