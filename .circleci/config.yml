@@ -8,10 +8,8 @@ jobs:
     - image: circleci/openjdk:8-jdk-browsers
     - image: circleci/mysql:8.0.11
       environment:
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
         MYSQL_ALLOW_EMPTY_PASSWORD: true
-        MYSQL_HOST: 127.0.0.1
+        MYSQL_ROOT_PASSWORD: ''
         MYSQL_DATABASE=: zayets_bot
     steps:
 
@@ -26,6 +24,11 @@ jobs:
         paths:
         - ~/.m2
         key: circleci-telegram-bot-{{ checksum "pom.xml" }}
+
+    - run:
+        name: Wait for DB
+        # preinstalled in circleci/* docker image
+        command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
 
     - run: mvn clean install
 
