@@ -9,6 +9,7 @@ jobs:
     - image: circleci/mysql:8.0.11
       environment:
         MYSQL_USER: root
+        MYSQL_PASSWORD: root
         MYSQL_ALLOW_EMPTY_PASSWORD: true
     steps:
 
