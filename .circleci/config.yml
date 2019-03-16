@@ -30,7 +30,7 @@ jobs:
         # preinstalled in circleci/* docker image
         command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
 
-    - run: mvn clean install
+    - run: mvn clean install -Dspring.datasource.password=1234
 
     - store_test_results:
         path: target/surefire-reports
