@@ -29,13 +29,8 @@ jobs:
         # preinstalled in circleci/* docker image
         command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
 
-    - run:
-        name: Wait for DB
-        # launch mysql
-        command: docker run --name=mysql1 -d mysql/mysql-server:8.0.11
-    - run:
-        name: Create DATABASE
-        command: mysql  -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT  EXISTS `zayets_bot` DEFAULT CHARACTER SET utf8;"
+        #NEED to create a zayets_bot database!
+
     - run: mvn clean install -Dspring.datasource.password=1234
 
     - store_test_results:
