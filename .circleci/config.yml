@@ -8,9 +8,9 @@ jobs:
     - image: circleci/openjdk:8-jdk-browsers
     - image: circleci/mysql:8.0.11
       environment:
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
+        MYSQL_ROOT_PASSWORD: root
         MYSQL_ALLOW_EMPTY_PASSWORD: true
+        MYSQL_HOST: 127.0.0.1
     steps:
 
     - checkout
