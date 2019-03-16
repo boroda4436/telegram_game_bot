@@ -8,8 +8,7 @@ jobs:
     - image: circleci/openjdk:8-jdk-browsers
     - image: circleci/mysql:8.0.11
       environment:
-        MYSQL_ALLOW_EMPTY_PASSWORD: true
-        MYSQL_ROOT_PASSWORD: ''
+        MYSQL_ROOT_PASSWORD: 1234
         MYSQL_DATABASE=: zayets_bot
     steps:
 
