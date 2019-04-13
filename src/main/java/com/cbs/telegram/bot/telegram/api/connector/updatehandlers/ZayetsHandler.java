@@ -1,12 +1,8 @@
-package com.cbs.telegram.bot.telegram.api.connector.updatehandlers;
+package com.cbs.telegram.bot.telegram_api_connector.updatehandlers;
 
-import com.cbs.telegram.bot.telegram.api.connector.dto.ActionDto;
-import com.cbs.telegram.bot.telegram.api.connector.repository.BotSettingRepository;
-import com.cbs.telegram.bot.telegram.api.connector.service.ActionService;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.cbs.telegram.bot.telegram_api_connector.config.BuildConfig;
+import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
+import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -18,20 +14,22 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.logging.BotLogger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class ZayetsHandler extends TelegramLongPollingBot {
     private static final String LOGTAG = "ZAYETS_HANDLER";
 
     private final ActionService actionService;
-    private final String botId;
+    private final String botUsername;
     private final String botToken;
 
     @Autowired
-    public ZayetsHandler(ActionService actionService, BotSettingRepository botSettingRepository) {
+    public ZayetsHandler(ActionService actionService, BuildConfig buildConfig) {
         this.actionService = actionService;
-        //TODO: move it to environment variables
-        botId = botSettingRepository.getOne("ZAYETS_USER").getTelegramId();
-        botToken = botSettingRepository.getOne("ZAYETS_USER").getToken();
+        botUsername = buildConfig.getUsername();
+        botToken = buildConfig.getToken();
     }
 
     @Override
@@ -48,7 +46,7 @@ public class ZayetsHandler extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return botId;
+        return botUsername;
     }
 
     @Override

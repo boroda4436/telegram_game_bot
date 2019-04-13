@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cbs.telegram.bot</groupId>
-    <artifactId>telegram_api_connector</artifactId>
+    <artifactId>telegram-bot</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
@@ -24,8 +24,10 @@
         <java.version>1.8</java.version>
         <telegrambots.version>4.0.1</telegrambots.version>
         <checkstyleVersion>8.18</checkstyleVersion>
-        <mavenCheckstylePluginVersion>2.17</mavenCheckstylePluginVersion>
         <sevntuVersion>1.24.2</sevntuVersion>
+        <mavenCheckstylePluginVersion>2.17</mavenCheckstylePluginVersion>
+        <mavenSurefirePlugin.version>3.0.0-M3</mavenSurefirePlugin.version>
+
     </properties>
 
     <dependencies>
@@ -93,6 +95,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${mavenSurefirePlugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

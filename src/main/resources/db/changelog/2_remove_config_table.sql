@@ -1,0 +1,1 @@
+DROP TABLE `zayets_bot`.`bot_setting`;
