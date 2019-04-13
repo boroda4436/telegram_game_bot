@@ -1,8 +1,12 @@
-package com.cbs.telegram.bot.telegram_api_connector.updatehandlers;
+package com.cbs.telegram.bot.telegram.api.connector.updatehandlers;
 
-import com.cbs.telegram.bot.telegram_api_connector.config.BuildConfig;
-import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
-import com.cbs.telegram.bot.telegram_api_connector.service.ActionService;
+import com.cbs.telegram.bot.telegram.api.connector.config.BuildConfig;
+import com.cbs.telegram.bot.telegram.api.connector.dto.ActionDto;
+import com.cbs.telegram.bot.telegram.api.connector.service.ActionService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -13,9 +17,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.logging.BotLogger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class ZayetsHandler extends TelegramLongPollingBot {
