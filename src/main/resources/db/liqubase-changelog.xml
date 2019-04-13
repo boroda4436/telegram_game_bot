@@ -11,5 +11,12 @@
                  relativeToChangelogFile="true"
                  splitStatements="true"
                  stripComments="true"/>
+        <sqlFile dbms="mysql"
+                 encoding="utf8"
+                 endDelimiter="\nGO"
+                 path="changelog/2_remove_config_table.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
     </changeSet>
 </databaseChangeLog>
