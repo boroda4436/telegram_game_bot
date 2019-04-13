@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix="bot.config")
 public class BuildConfig {
+    private String username;
+    private String token;
     private Boolean useWebHook;
     private String externalWebhookUrl;
     private String internalWebhookUrl;
