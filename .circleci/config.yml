@@ -31,7 +31,7 @@ jobs:
 
         #NEED to create a zayets_bot database!
 
-    - run: mvn clean install -Dspring.datasource.password=1234
+    - run: mvn clean install -Dspring.datasource.password=1234 -Dbot.config.username=TELEGRAM_BOT_USERNAME -Dbot.config.token=TELEGRAM_BOT_TOKEN
 
     - store_test_results:
         path: target/surefire-reports
