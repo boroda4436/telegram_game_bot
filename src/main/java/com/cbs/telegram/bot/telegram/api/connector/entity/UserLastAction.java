@@ -1,10 +1,4 @@
-package com.cbs.telegram.bot.telegram_api_connector.entity;
-
-import com.cbs.telegram.bot.telegram_api_connector.dto.ActionDto;
-import lombok.Builder;
-import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+package com.cbs.telegram.bot.telegram.api.connector.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Builder;
+import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Builder
 @Data
